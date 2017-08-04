@@ -1,7 +1,7 @@
 function out = load_data_path(filename)
     % extract ranges from the data containing a test path
     
-    fprintf("Loading data.\n");
+    fprintf("Loading path data.\n");
 
     out = struct();
     
