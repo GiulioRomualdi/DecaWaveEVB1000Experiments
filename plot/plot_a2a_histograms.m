@@ -1,6 +1,9 @@
-function plot_a2a_histograms(data)
+function fig = plot_a2a_histograms(data)
 % extract fieldnames
 fields = fieldnames(data);
+
+% open a new figure
+fig = figure();
 
 for i=1:size(fields)
     subplot(3,2,i);
