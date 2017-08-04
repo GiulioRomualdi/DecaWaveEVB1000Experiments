@@ -1,2 +1,4 @@
-# mex files
+# Matlab files
 *.mex*
+*.asv
+*.mat
