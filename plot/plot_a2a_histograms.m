@@ -1,4 +1,4 @@
-function plot_histograms(data)
+function plot_a2a_histograms(data)
 % extract fieldnames
 fields = fieldnames(data);
 
