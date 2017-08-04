@@ -6,3 +6,6 @@ addpath('data_load_scripts/');
 
 % trilateration contains trilat algorithms
 addpath('trilateration/');
+
+% plot contains functions required to plot histograms and 3d scatters
+addpath('plot/');
