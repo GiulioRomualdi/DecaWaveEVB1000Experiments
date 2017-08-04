@@ -67,10 +67,10 @@ function anchor_positions = eval_anch_pos(anchor_to_anchor_data, data_type)
     % cycle through all the ranges and evaluate the means
     for i = 1:length(range_names)
         % extract range name (i.e. r_ij)
-        range_name = char(field_names(i));
+        range_name = char(range_names(i));
         
         % eval mean for each range field
-        mean_value = mean(data.(range_name).(data_type));
+        mean_value = mean(anchor_to_anchor_data.(range_name).(data_type));
         
         % append data
         means = [means; mean_value];
