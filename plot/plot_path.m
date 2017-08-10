@@ -1,31 +1,30 @@
-function fig = plot_path(path, anchor_pos_data, anchor_pos_data_type, ...
-                         plane_height,skip_frames)
+function fig = plot_path(trilateration_data, anchor_pos_data, anchor_pos_data_type, ...
+                         plane_height, skip_frames)
                      
-    
-    % evaluate cartesian position with decawave algorithm
-    positions_decawave = perform_trilateration(path, anchor_pos_data,...
-                         anchor_pos_data_type, @decawave_trilateration);
-    
-    % evaluate cartesian position with decawave algorithm
-    positions_algebraic = perform_trilateration(path, anchor_pos_data,...
-                         anchor_pos_data_type, @algebraic_trilateration);
-    
     % evaluate cartesian position of the anchors
     anchor_positions = eval_anch_pos(anchor_pos_data, ...
                        anchor_pos_data_type);
 
     fig = figure;
     hold on
-    % compare the position obtained using the two algorithms
-    x = positions_decawave.x(skip_frames:end);
-    y = positions_decawave.y(skip_frames:end);
-    z = positions_decawave.z(skip_frames:end);
-    scatter3(x, y, z + plane_height, 2);    
-
-    x = positions_algebraic.x(skip_frames:end);
-    y = positions_algebraic.y(skip_frames:end);
-    z = positions_algebraic.z(skip_frames:end);
-    scatter3(x, y, z + plane_height, 2);    
+    
+    % extract algorithm name from trilateration_data
+    alg_names = fieldnames(trilateration_data)';
+    
+    % cycle over algorithms
+    for alg_name = alg_names
+        
+        % extract trilateration data
+        positions = trilateration_data.(alg_name{:});
+        
+        % cut signals according to skip_frames
+         x = positions.x(skip_frames:end);
+         y = positions.y(skip_frames:end);
+         z = positions.z(skip_frames:end);
+         
+         % make plot
+         scatter3(x, y, z + plane_height, 2);    
+    end
         
    % plot anchors positions
    for i=1:4
@@ -41,7 +40,7 @@ function fig = plot_path(path, anchor_pos_data, anchor_pos_data_type, ...
    surf(x, y, z, 'FaceAlpha',0.5, 'EdgeColor', 'none')
    
    % print legend
-   legend('decawave', 'algebraic', 'a0', 'a1', 'a2', 'a3')
+   legend(alg_names{:}, 'a0', 'a1', 'a2', 'a3')
    
    xlabel('x (m)');
    ylabel('y (m)');
