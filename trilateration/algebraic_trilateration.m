@@ -22,8 +22,8 @@ function trilateration = algebraic_trilateration(ranges, anch_pos)
 
     % perform trilateration
     use4thAnchor = 1;
-    [ranges, ~, ~] = decatrilat(use4thAnchor, ranges_cell{:}, ...
+    [trilat, ~, ~] = decatrilat(use4thAnchor, ranges_cell{:}, ...
                              anch_pos_vector, 0);
 
-    trilateration = ranges(4:6) * 10^-3;
+    trilateration = trilat(4:6) * 10^-3;
 end

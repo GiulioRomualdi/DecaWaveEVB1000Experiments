@@ -22,8 +22,12 @@ function trilateration = decawave_trilateration(ranges, anch_pos)
 
     % perform trilateration
     use4thAnchor = 1;
-    [ranges, ~, ~] = decatrilat(use4thAnchor, ranges_cell{:}, ...
+    [trilat, res, ~] = decatrilat(use4thAnchor, ranges_cell{:}, ...
                              anch_pos_vector, 0);
-
-    trilateration = ranges(1:3);
+                         
+    if (res(1) >= 0)
+        trilateration = trilat(1:3);
+    else
+        trilateration = NaN * ones(1,3);
+    end
 end
