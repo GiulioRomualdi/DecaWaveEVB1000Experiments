@@ -9,13 +9,13 @@ function fig = plot_path(trilateration_data, anchor_pos_data, anchor_pos_data_ty
     hold on
     
     % extract algorithm name from trilateration_data
-    alg_names = fieldnames(trilateration_data)';
+    alg_names = fieldnames(trilateration_data.(anchor_pos_data_type))';
     
     % cycle over algorithms
     for alg_name = alg_names
         
         % extract trilateration data
-        positions = trilateration_data.(alg_name{:});
+        positions = trilateration_data.(anchor_pos_data_type).(alg_name{:});
         
         % cut signals according to skip_frames
          x = positions.x(skip_frames:end);
