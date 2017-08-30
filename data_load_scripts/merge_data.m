@@ -8,7 +8,9 @@ fields = fieldnames(out);
 
 % merge data
 for i = 1:size(fields)
-    out.(char(fields(i))).('tag') = tag2a.(char(fields(i))).('tag');
+    if not(isempty(fieldnames(tag2a)))
+        out.(char(fields(i))).('tag') = tag2a.(char(fields(i))).('tag');
+    end
     out.(char(fields(i))).('laser') = laser.(char(fields(i))).('laser');
 end
 end
