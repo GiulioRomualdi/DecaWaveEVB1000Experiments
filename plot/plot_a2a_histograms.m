@@ -67,7 +67,11 @@ y_lim = ylim;
 line([data.('laser'), data.('laser')],[0, y_lim(2)],'Color','blue','LineStyle','--')
 
 % legend
-legend('anch','tag','laser');
+if(isfield(data,'tag'))
+    legend('anch','tag','laser');
+else
+    legend('anch','laser');
+end
 
 % labels
 xlabel('Range (m)');
