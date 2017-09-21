@@ -9,3 +9,6 @@ addpath('trilateration/');
 
 % plot contains functions required to plot histograms and 3d scatters
 addpath('plot/');
+
+% export fig contains function required to export plot as pdf files
+addpath('export_fig/');
