@@ -1,5 +1,24 @@
-function anchor_positions = eval_anch_pos(anchor_to_anchor_data, data_type)
+function anchor_position = eval_anch_pos(anchor_to_anchor_data)
+% extract the anchor positions from an anchor_to_anchor_data struct
+       
+% init the struct
+anchor_position = struct();
 
+if(isfield(anchor_to_anchor_data.r01,'tag'))
+    type_names = {'joined','tag','laser'};
+else
+   type_names = {'joined','laser'};
+end
+    
+% cycle through type names
+for name = type_names
+    anchor_position.(name{:}) = eval_anch_pos_by_type(anchor_to_anchor_data, name{:});
+end
+    
+end
+
+
+function anchor_positions = eval_anch_pos_by_type(anchor_to_anchor_data, data_type)
     % extract the anchor positions from an anchor_to_anchor_data struct
     % given the type of anchor_to_anchor_data
     %

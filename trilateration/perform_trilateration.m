@@ -1,5 +1,4 @@
-function positions = perform_trilateration(path, anchor_pos_data,...
-    anchor_pos_data_type, trilat_alg)
+function positions = perform_trilateration(path, anchor_positions, trilat_alg)
     % perform trilateration on a set of ranges given
     % the anchor to anchor data,
     % the type of the anchor to anchor data (e.g. autoranging or tag_over_anchor)
@@ -10,10 +9,7 @@ function positions = perform_trilateration(path, anchor_pos_data,...
     
     % extract path size using the first column
     path_length = length(path.r0);
-    
-    % eval anchor positions using anchor_to_anchor data
-    anchor_positions = eval_anch_pos(anchor_pos_data, anchor_pos_data_type);
-    
+        
     % cycle over ranges
     for i=1:path_length
         
