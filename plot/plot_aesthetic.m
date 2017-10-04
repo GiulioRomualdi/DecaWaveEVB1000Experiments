@@ -4,19 +4,39 @@ function plot_aesthetic(Title, Label_x, Label_y, Label_z, varargin)
 %   add title, labels and legends in a plot. LaTex syntax is allowed.
 
 % set labels
-x_label = xlabel(Label_x);
-y_label = ylabel(Label_y);
-z_label = zlabel(Label_z);
-set(x_label,'Interpreter','latex')
-set(y_label,'Interpreter','latex')
-set(z_label,'Interpreter','latex')
-set(x_label,'FontSize', 16);
-set(y_label,'FontSize', 16);
-set(z_label,'FontSize', 16);
+if ~isempty(Label_x)
+    x_label = xlabel(Label_x);
+    set(x_label,'Interpreter','latex');
+    set(x_label,'FontSize', 16);
+end
+
+if ~isempty(Label_y)
+    y_label = ylabel(Label_y);
+    set(y_label,'Interpreter','latex');
+    set(y_label,'FontSize', 16);
+end
+
+if ~isempty(Label_z)
+    z_label = zlabel(Label_z);
+    set(z_label,'Interpreter','latex');
+    set(z_label,'FontSize', 16);
+end
 
 % set legend
 if ~isempty(varargin)
-    h = legend(varargin{:}, 'Location', 'best');
+    % get the legend object
+    leg = findobj(gcf, 'type', 'legend');
+
+    % if the legend does not exist create a new one
+    if isempty(leg)
+        new_legend = varargin;
+    else
+        old_legend = leg.String;
+        % when a new plot is draw an automatic string is added to the
+        % legend
+        new_legend = [old_legend(1:end-1), varargin{:}];
+    end
+    h = legend(new_legend, 'Location', 'best');
     set(h,'Interpreter','latex')
     set(h,'FontSize', 16);
 end
@@ -26,9 +46,11 @@ h = findobj(gcf,'type','line');
 set(h,'linewidth',1.2)
 
 % set the title
-tit = title(Title);
-set(tit,'FontSize', 25);
-set(tit,'Interpreter','latex');
+if ~isempty(Title)
+    tit = title(Title);
+    set(tit,'FontSize', 25);
+    set(tit,'Interpreter','latex');
+end
 
 % change font size
 set(gca,'FontSize', 16)
