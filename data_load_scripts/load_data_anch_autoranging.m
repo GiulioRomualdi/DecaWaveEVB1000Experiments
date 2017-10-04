@@ -1,28 +1,18 @@
-function out = load_data_anch(prefix)
+function data = load_data_anch_autoranging(prefix, data)
     % extract autoranging ranges obtained using the novel procedure
 
-    data = struct();
     for i=0:2
         fprintf("Loading data of anchor %d.\n", i);
-        data.(strcat('data',num2str(i))) = load_data_from_file(strcat(prefix,num2str(i),'.csv'));
+        data = load_data_from_file(strcat(prefix, num2str(i),'.csv'),data);
     end
-
-    % concat structures
-    out = cell2struct(...
-        cat(1,struct2cell(data.data0), struct2cell(data.data1), struct2cell(data.data2)),...
-        cat(1,fieldnames(data.data0), fieldnames(data.data1), fieldnames(data.data2)),...
-        1);
 end
 
 
-function data = load_data_from_file(filename)
+function data = load_data_from_file(filename, data)
     data_from_file = readtable(filename);
 
     % the id of the anchor that produced this file
     % anchor_id = data_from_file.dest_id(1);
-
-    % output data
-    data = struct();
 
     % loop on each row
     for i=1:size(data_from_file,1)

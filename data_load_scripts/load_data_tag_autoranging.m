@@ -1,24 +1,16 @@
-function out = load_data_tag(prefix)
+function data = load_data_tag_autoranging(prefix, data)
     % extract autoranging ranges obtained using the 'tag_over_anchor' procedure
-
-    data = struct();
     for i=0:2
         fprintf("Loading data of tag over anchor %d.\n", i);
-        data.(strcat('data',num2str(i))) = load_data_from_file(strcat(prefix,num2str(i),'.csv'),i);
+        data = load_data_from_file(strcat(prefix,num2str(i),'.csv'),i, data);
     end
 
     % concat structures
-    out = cell2struct(...
-        cat(1,struct2cell(data.data0), struct2cell(data.data1), struct2cell(data.data2)),...
-        cat(1,fieldnames(data.data0), fieldnames(data.data1), fieldnames(data.data2)),...
-        1);
 end
 
-function out = load_data_from_file(filename, origin)
+function data = load_data_from_file(filename, origin,data)
     file_data = readtable(filename);
-    
-    out = struct();
-    
+        
     for i=1:size(file_data,1)
         for j=0:3
             % avoid saving duplicated data
@@ -34,13 +26,16 @@ function out = load_data_from_file(filename, origin)
                 range = nonzeros(ranges(i) / 1000);
                 
                 % save the range
-                if not(isfield(out,range_name))
-                    out.(range_name).('tag') = range;
+                if not(isfield(data,range_name))
+                    data.(range_name).('tag') = range;
+                % data.(range_name) can already exist however 
+                % data.(range_name).tag does not!
+                elseif not(isfield(data.(range_name),'tag'))
+                    data.(range_name).('tag') = range;
                 else
-                    out.(range_name).('tag') = [out.(range_name).('tag'); range];
+                    data.(range_name).('tag') = [data.(range_name).('tag'); range];
                 end
             end
-
         end
     end
 end
