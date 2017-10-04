@@ -1,60 +1,25 @@
-function fig = plot_path(trilateration_data, anchor_pos_data, anchor_pos_data_type, ...
-                         plane_height, skip_frames)
-                     
-    % evaluate cartesian position of the anchors
-    anchor_positions = eval_anch_pos(anchor_pos_data, ...
-                       anchor_pos_data_type);
+function plot_path(x, y, z, plane_height, skip_frames, Legend)
+% PLOT_PATH plot a 3D path
+%   PLOT_PATH(x, y, z, plane_height, skip_frames, Title, Legend)
+%   * x, y and z are three vector contating the x, y and z coordinates in
+%     meteres of the path
+%   * plane_height reppresents the height of the common plane between A0,
+%     A1 and A2
+%   * skip_frames reppresents the number of frame that has to be skipped in
+%     the reppresentation
+%   * Title and Legend are two strings with the Title and the Legend of
+%     plot
 
-    fig = figure;
-    hold on
+hold on
+        
+% cut signals according to skip_frames
+x = x(skip_frames:end);
+y = y(skip_frames:end);
+z = z(skip_frames:end);
+      
+% make plot
+scatter3(x, y, z + plane_height, 2);    
     
-    % extract algorithm name from trilateration_data
-    alg_names = fieldnames(trilateration_data.(anchor_pos_data_type))';
-    
-    % cycle over algorithms
-    for alg_name = alg_names
-        
-        % extract trilateration data
-        positions = trilateration_data.(anchor_pos_data_type).(alg_name{:});
-        
-        % cut signals according to skip_frames
-         x = positions.x(skip_frames:end);
-         y = positions.y(skip_frames:end);
-         z = positions.z(skip_frames:end);
-         
-         % make plot
-         scatter3(x, y, z + plane_height, 2);    
-    end
-        
-   % plot anchors positions
-   for i=1:4
-        x = anchor_positions(1,i);
-        y = anchor_positions(2,i); 
-        z = anchor_positions(3,i);
-        plot3([x, x], [y, y], [0, z + plane_height], 'LineWidth', 10)
-   end
-   
-   % plot ground
-   [x, y] = meshgrid(xlim,ylim);
-   z = zeros(length(ylim), length(xlim));
-   surf(x, y, z, 'FaceAlpha',0.5, 'EdgeColor', 'none')
-   
-   % print legend
-   legend(alg_names{:}, 'a0', 'a1', 'a2', 'a3')
-   
-   xlabel('x (m)');
-   ylabel('y (m)');
-   zlabel('z (m)');
-   
-   Title = "Trilateration";
-   
-   if strcmp(anchor_pos_data_type, 'tag')
-        Title = strcat(Title, ' (anchors position with tag over anchors)');
-   elseif strcmp(anchor_pos_data_type, 'laser')
-       Title = strcat(Title, '  (anchors position with manual measuraments)');
-   elseif strcmp(anchor_pos_data_type, 'joined')
-       Title = strcat(Title, ' (anchors position with autoranging procedures)');
-   end
-       
-   title(Title);
+% print legend
+plot_aesthetic('','','','', Legend);
 end
