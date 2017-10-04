@@ -1,10 +1,10 @@
-function anchor_position = eval_anch_pos(anchor_to_anchor_data)
+function anchor_position = eval_anch_pos(autoranging)
 % extract the anchor positions from an anchor_to_anchor_data struct
        
 % init the struct
 anchor_position = struct();
 
-if(isfield(anchor_to_anchor_data.r01,'tag'))
+if(isfield(autoranging.r01,'tag'))
     type_names = {'joined','tag','laser'};
 else
    type_names = {'joined','laser'};
@@ -12,7 +12,7 @@ end
     
 % cycle through type names
 for name = type_names
-    anchor_position.(name{:}) = eval_anch_pos_by_type(anchor_to_anchor_data, name{:});
+    anchor_position.(name{:}) = eval_anch_pos_by_type(autoranging, name{:});
 end
     
 end
