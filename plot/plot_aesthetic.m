@@ -6,8 +6,8 @@ function plot_aesthetic(Title, Label_x, Label_y, Label_z, varargin)
 % set labels
 if ~isempty(Label_x)
     x_label = xlabel(Label_x);
-    set(x_label,'Interpreter','latex');
-    set(x_label,'FontSize', 16);
+    set(x_label, 'Interpreter', 'latex');
+    set(x_label, 'FontSize', 16);
 end
 
 if ~isempty(Label_y)
@@ -25,9 +25,14 @@ end
 % set legend
 if ~isempty(varargin)
     % get the legend object
-    leg = findobj(gcf, 'type', 'legend');
+    leg = findobj(gca, 'type', 'legend');
 
     % if the legend does not exist create a new one
+    
+    for i = 1:length(varargin)
+        varargin(i) = strrep(varargin(i),'_',' ');
+    end
+    
     if isempty(leg)
         new_legend = varargin;
     else
