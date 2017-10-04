@@ -1,4 +1,4 @@
-function out = load_data_path(filename)
+function out = load_data_path_ranges(filename)
     % extract ranges from the data containing a test path
     
     fprintf("Loading path data.\n");
