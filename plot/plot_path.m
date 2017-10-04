@@ -18,7 +18,7 @@ y = y(skip_frames:end);
 z = z(skip_frames:end);
       
 % make plot
-scatter3(x, y, z + plane_height, 2);    
+scatter3(x, y, z + plane_height, 10, 'filled');    
     
 % print legend
 plot_aesthetic('','','','', Legend);
