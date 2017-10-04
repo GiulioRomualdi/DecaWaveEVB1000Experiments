@@ -1,6 +1,6 @@
-function fig = plot_a2a_histograms(data)
+function fig = plot_a2a_histograms(autoranging)
 % extract fieldnames
-fields = fieldnames(data);
+fields = fieldnames(autoranging);
 
 % open a new figure
 fig = figure();
@@ -8,7 +8,7 @@ fig = figure();
 for i=1:size(fields)
     subplot(3,2,i);
     field = char(fields(i));
-    plot_histogram(field, data.(field), 1024);
+    plot_histogram(field, autoranging.(field), 1024);
 end 
 end
 
@@ -47,9 +47,6 @@ hold on
 for i = 1:size(fields)
     field_name = char(fields(i));
     d = data.(field_name);
-%     if not(strcmp(field_name,'laser'))
-%         histogram(d, support);
-%     end
 
     if length(d) > max_size
         d = d(1:max_size);
@@ -68,16 +65,10 @@ line([data.('laser'), data.('laser')],[0, y_lim(2)],'Color','blue','LineStyle','
 
 % legend
 if(isfield(data,'tag'))
-    legend('anch','tag','laser');
+    Legend = {'anch','tag','laser'};
 else
-    legend('anch','laser');
+    Legend = {'anch','laser'};
 end
 
-% labels
-xlabel('Range (m)');
-ylabel('#');
-
-% title 
-title(experiment_name)
-
+plot_aesthetic(experiment_name, 'Range (m)', 'Samples', '', Legend{:})
 end
