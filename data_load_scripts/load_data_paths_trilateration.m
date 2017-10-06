@@ -1,12 +1,12 @@
-function trilateration = load_data_paths_trilateration(postfix)
+function trilateration = load_data_paths_trilateration()
 
 % get all files with the same postfix
-files = dir(strcat('*', postfix));
+files = dir('*_tpr.csv');
 
 % init struct
 trilateration = struct();
 for file = files'
-     % popolate struct
+    % popolate struct
     trilateration = load_data_path_trilateration(file.name, trilateration);
 end
 end

@@ -1,7 +1,7 @@
-function anchor_position = load_anchor_position(postfix)
-% get all files with the same postfix
-files = dir(strcat('*', postfix));
+function anchor_cartesian = load_anchor_position()
 
+% get all files that ends with _apr.csv
+files = dir('*_apr.csv');
 filename = files(1).name;
 
 % read data
@@ -29,7 +29,7 @@ a3_y = data_from_file.('a3_y')(1);
 a3_z = data_from_file.('a3_z')(1);
 
 % popolate matrix
-anchor_position = [a0_x, a1_x, a2_x, a3_x;
+anchor_cartesian = [a0_x, a1_x, a2_x, a3_x;
                    a0_y, a1_y, a2_y, a3_y;
                    a0_z, a1_z, a2_z, a3_z];
 
