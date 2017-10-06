@@ -25,8 +25,8 @@ end
 % set legend
 if ~isempty(varargin)
     % get the legend object
-    leg = findobj(gca, 'type', 'legend');
-
+    leg = get(legend(gca),'String');
+    
     % if the legend does not exist create a new one
     
     for i = 1:length(varargin)
@@ -36,7 +36,7 @@ if ~isempty(varargin)
     if isempty(leg)
         new_legend = varargin;
     else
-        old_legend = leg.String;
+        old_legend = leg;
         % when a new plot is draw an automatic string is added to the
         % legend
         new_legend = [old_legend(1:end-1), varargin{:}];
