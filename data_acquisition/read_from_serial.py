@@ -101,10 +101,10 @@ class Codec:
                       (unsigned), (unsigned)
         """
         
-        if self.type_code == 'anc_report':
+        if self.type_code == 'arr':
             self.items_codec = ['s'] + ['u'] * 4 + ['f'] + ['s']
-        elif self.type_code == 'tag_report':
-            self.items_codec = ['s'] + ['u'] * 5
+        elif self.type_code == 'trr':
+            self.items_codec = ['s'] + ['u'] * 6
 
     def decode_data(self, string):
         """
@@ -160,16 +160,16 @@ class DataFromEVB:
         If the message is valid set the keys that depends on the type_code.
         """
         
-        if len(self.string) < 10:
+        if len(self.string) < 3:
             self.type_code =  None
 
-        self.type_code = self.string[0:10]
+        self.type_code = self.string[0:3]
         
-        if self.type_code == 'anc_report':
+        if self.type_code == 'arr':
             self.keys = ['msg_name', 'range_num', 'master_id', 'src_id',
                          'dest_id', 'range', 'flag']
-        elif self.type_code == 'tag_report':
-            self.keys = ['msg_name', 'range_num', 'r0', 'r1', 'r2', 'r3']
+        elif self.type_code == 'trr':
+            self.keys = ['msg_name', 'tag_id', 'range_num', 'r0', 'r1', 'r2', 'r3']
         else:
             self.type_code = None
 
