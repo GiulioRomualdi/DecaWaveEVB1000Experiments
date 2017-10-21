@@ -48,7 +48,7 @@ end
 
 % change linewidth
 h = findobj(gcf,'type','line');
-set(h,'linewidth',1.2)
+%set(h,'linewidth',1.2)
 
 % set the title
 if ~isempty(Title)
