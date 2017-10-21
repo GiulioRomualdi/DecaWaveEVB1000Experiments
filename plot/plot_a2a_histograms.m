@@ -1,18 +1,38 @@
-function fig = plot_a2a_histograms(autoranging)
+function plot_a2a_histograms(autoranging)
 % extract fieldnames
 fields = fieldnames(autoranging);
 
 % open a new figure
-fig = figure();
+figure();
 
 for i=1:size(fields)
     subplot(3,2,i);
     field = char(fields(i));
-    plot_histogram(field, autoranging.(field), 1024);
+    % plot histograms
+    plot_histogram(autoranging.(field), inf);
+    
+    % plot laser measurement 
+    plot_data_laser(autoranging.(field));
+
+    % generate the legend
+    Legend = fieldnames(autoranging.(field))';
+    Legend = intersect(Legend, {'joined','tag','laser'});
+
+    % add title, legend and label
+    plot_aesthetic(field, 'Range (m)', 'Samples', '', Legend{:})
 end 
 end
 
-function plot_histogram(experiment_name, data, max_size)
+function plot_data_laser(data)
+if (isfield(data,'laser')) 
+    % plot laser value
+    y_lim = ylim;
+    line([data.('laser'), data.('laser')],[0, y_lim(2)],'Color','red','LineStyle','--')
+end
+end
+
+
+function plot_histogram(data, max_size)
 % extract fieldnames
 fields = fieldnames(data);
 
@@ -53,22 +73,9 @@ for i = 1:size(fields)
     end
     
     if strcmp(field_name,'joined')
-         histogram(d, support,'FaceColor', [0 0.5 0.5]);
+         histogram(d, support)%,'FaceColor', [0 0.5 0.5]);
     elseif strcmp(field_name, 'tag')
-         histogram(d, support,'FaceColor', [0.5 0 0]);
+         histogram(d, support)%,'FaceColor', [0.5 0 0]);
     end
 end
-
-% plot laser value
-y_lim = ylim;
-line([data.('laser'), data.('laser')],[0, y_lim(2)],'Color','blue','LineStyle','--')
-
-% legend
-if(isfield(data,'tag'))
-    Legend = {'anch','tag','laser'};
-else
-    Legend = {'anch','laser'};
-end
-
-plot_aesthetic(experiment_name, 'Range (m)', 'Samples', '', Legend{:})
 end
