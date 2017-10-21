@@ -1,5 +1,5 @@
 function trilat_by_type = trilat_by_type(path, anchor_position)
-s
+
 % storage contains trilateration results evaluated with different
 % anchor_pos_data_type 
 trilat_by_type = struct();
