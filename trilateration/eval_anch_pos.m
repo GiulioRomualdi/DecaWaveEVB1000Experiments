@@ -5,7 +5,7 @@ function anchor_position = eval_anch_pos(autoranging)
 anchor_position = struct();
 
 % empty list of type names
-type_names = {}
+type_names = {};
 
 % add type names depending on availability of data
 % in the struct autoranging
