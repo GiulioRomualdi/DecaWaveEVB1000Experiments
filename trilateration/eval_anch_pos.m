@@ -4,12 +4,23 @@ function anchor_position = eval_anch_pos(autoranging)
 % init the struct
 anchor_position = struct();
 
+% empty list of type names
+type_names = {}
+
+% add type names depending on availability of data
+% in the struct autoranging
 if(isfield(autoranging.r01,'tag'))
-    type_names = {'joined','tag','laser'};
-else
-   type_names = {'joined','laser'};
+    type_names = [type_names, 'tag'];
 end
-    
+
+if(isfield(autoranging.r01,'joined'))
+    type_names = [type_names, 'joined'];
+end
+
+if(isfield(autoranging.r01,'laser'))
+    type_names = [type_names, 'laser'];
+end
+
 % cycle through type names
 for name = type_names
     anchor_position.(name{:}) = eval_anch_pos_by_type(autoranging, name{:});
