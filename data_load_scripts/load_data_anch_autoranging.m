@@ -2,7 +2,7 @@ function data = load_data_anch_autoranging(prefix, data)
     % extract autoranging ranges obtained using the novel procedure
 
     for i=0:2
-        fprintf("Loading data of anchor %d.\n", i);
+        fprintf('Loading data of anchor %d.\n', i);
         data = load_data_from_file(strcat(prefix, num2str(i),'.csv'),data);
     end
 end

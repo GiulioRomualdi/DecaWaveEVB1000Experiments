@@ -1,7 +1,7 @@
 function data = load_data_tag_autoranging(prefix, data)
     % extract autoranging ranges obtained using the 'tag_over_anchor' procedure
     for i=0:2
-        fprintf("Loading data of tag over anchor %d.\n", i);
+        fprintf('Loading data of tag over anchor %d.\n', i);
         data = load_data_from_file(strcat(prefix,num2str(i),'.csv'),i, data);
     end
 
