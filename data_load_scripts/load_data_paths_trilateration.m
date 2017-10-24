@@ -20,7 +20,7 @@ fprintf("Loading path data from %s.\n",filename);
 data_from_file = readtable(filename);
 
 % get tag_id
-tag_id = strcat('tag_', num2str(data_from_file.('tag_id')(1)));
+tag_id = strcat('tag_', num2str(data_from_file.('id')(1)));
 
 % get tag position
 x = data_from_file.('x');
